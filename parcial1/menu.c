@@ -4,36 +4,42 @@ int mainMenu(){
 
 	int unsigned opt;
 	printf("\n######################################################\n"
-		"################## ABM VETERINARIA ###################\n"
+		"#################### ABM VET STORE ###################\n"
 		"######################################################\n"
-		"(1). MOSTRAR CLIENTES Y MASCOTAS\n"
-		"(2). MOSTRAR SOLO CLIENTES\n"
-		"(3). MOSTRAR SOLO MASCOTAS\n"
-		"(4). ALTA MASCOTA\n"
-		"(5). BAJA MASCOTA\n"
-		"(6). MODIFICAR MASCOTA\n"
-		"(7). ALTA CLIENTE\n"
+		"(1). SHOW CLIENTS WITH PETS\n"
+		"(2). SHOW ONLY CLIENTS\n"
+		"(3). SHOW ONLY PETS\n"
+		"(4). ADD PET\n"
+		"(5). REMOVE PET\n"
+		"(6). MODIFY PET\n"
+		"(7). ADD CLIENT\n"
+		"(8). REMOVE CLIENT WITH PETS\n"
 		"(9). EXIT ");
 		
 	scanf("%d", &opt); 
 	return opt;
 }
 
-int modifyPetMenu(){
+int modifyPetMenu(int choice){
 
 	int unsigned opt;
-	printf("\n######################################################\n"
-		"############ SUBMENU MODIFICAR MASCOTA ###############\n"
-		"######################################################\n"
-		"(1). MOSTRAR LISTA MASCOTAS\n"
-		"(2). INGRESE ID MASCOTA A MODIFICAR\n"
-		"(3). MODIFICAR NOMBRE\n"
-		"(4). MODIFICAR SEXO\n"
-		"(5). MODIFICAR EDAD\n"
-		"(6). MODIFICAR PESO\n"
-		"(7). MODIFICAR RAZA\n"
-		"(8). MODIFICAR TIPO\n"
-		"(9). EXIT ");
+	if(choice == 0){
+
+		printf("\n######################################################\n"
+			"################ MODIFY PETS SUBMENU #################\n"
+			"######################################################\n"
+			"(1). SHOW PET LIST\n"
+			"(2). INPUT PET'S ID T BE MODIFIED\n"
+			"(3). EXTI TO MAIN MENU ");
+	}else{
+		printf("(1). MODIFY NAME\n"
+			"(2). MODIFY SEX\n"
+			"(3). MODIFY AGE\n"
+			"(4). MODIFY WEIGHT\n"
+			"(5). MODIFY BREED\n"
+			"(6). MODIFY TYPE\n"
+			"(7). EXIT ");
+	}
 		
 	scanf("%d", &opt); 
 	return opt;

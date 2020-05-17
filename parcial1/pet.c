@@ -1,4 +1,5 @@
 #include<string.h>
+#include<stdio_ext.h>
 #include<stdio.h>
 #include<ctype.h>
 #include"pet.h"
@@ -53,21 +54,14 @@ int findFreePetSpot(aPet pets[], int len){
 	return index;
 }
 
-void printPets(aPet pets[], int lenP){
+void printOnePet(aPet pets){
 	char sp = ' ';
-        printf("\n#########################################################################################\n"
-               "###################################### PETS LIST ########################################\n"
-               "#########################################################################################\n");
-        printf("# %2cID%2cID_C%12cNAME%9cTYPE%14cRACE%8cWEIGHT%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp, sp);
+        printf("#########################################################################################\n");
+        printf("# ID_P%2cID_C%12cNAME%9cTYPE%14cBREED%8cWEIGHT%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp);
+        printf("#########################################################################################\n");
+	printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d\n", pets.idPet, pets.idClient, pets.name, pets.type,
+						pets.race,pets.sex,pets.weight, pets.age);
         printf("#########################################################################################\n\n");
-
-	for(int x = 0; x < lenP; x++){
-		if(pets[x].isEmpty == OCU){
-			printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d\n", 
-					pets[x].idPet, pets[x].idClient, pets[x].name, pets[x].type,
-					pets[x].race,pets[x].sex,pets[x].weight, pets[x].age);
-		}
-	}
 }
 
 int getPetById(aPet pets[], int len, int id){
@@ -81,129 +75,138 @@ int getPetById(aPet pets[], int len, int id){
 	return index;
 }
 
-void deletePet(aPet pets[], int len){
+int deletePet(aPet pets[], int len){
 
 	char number[10];
 	int validateN;
 	int index;
+	int output = -1;
 	printPets(pets, len);
+	char opt;
 	validateN = validateNumber("Input Pet ID: ", number, 10);
 	index = getPetById(pets, len, validateN);
 	while(index == -1){
 		validateN = validateNumber("Wrong ID, try again: ", number, 10);
 		index = getPetById(pets, len, validateN);
 	}
-	pets[index].isEmpty = LIBRE;
-	printf("Pet deleted");
+	printf("You're about to remove %s. Are you sure [y:n] ", pets[index].name);
+	__fpurge(stdin);
+	scanf("%c", &opt);
+	while(opt !='y' && opt !='n'){
+		printf("Wrong, Are you sure [y:n] ");
+		__fpurge(stdin);
+		scanf("%c", &opt);
+	}
+	if(opt == 'y'){
+		pets[index].isEmpty = LIBRE;
+		output = 0;
+		printf("Pet deleted");
+	}else{
+		printf("No pet deleted");
+	}
+	return output;
 }
 
 void modifyPet(aPet pets[], int len){
 
 	char number[10];
-	int opt;
+	int opt1, opt2;
 	int validateN;
 	char name[30];
 	char race[20];
 	char type[30];
 	float weight;
-	char sexo;
+	char sex;
 	int index;
 	int flag = 0;
 	int validType;
+	int menu = 0;
 	do{
-		opt = modifyPetMenu();
+		if(menu == 0){
+			do{
+				opt1 = modifyPetMenu(menu);
 
-		switch(opt){
-			
-			case 1:
-				printPets(pets, len);
-				break;
-
-			case 2:
-				validateN = validateNumber("Input Pet ID to be modified: ", number, 10);
-				index = getPetById(pets, len, validateN);
-				while(index == -1){
-					validateN = validateNumber("Wrong ID, try again: ", number, 10);
-					index = getPetById(pets, len, validateN);
+				switch(opt1){
+					
+					case 1:
+						printPets(pets, len);
+						break;
+		
+					case 2:
+						validateN = validateNumber("Input Pet ID to be modified: ", number, 10);
+						index = getPetById(pets, len, validateN);
+						while(index == -1){
+							validateN = validateNumber("Wrong ID, try again: ", number, 10);
+							index = getPetById(pets, len, validateN);
+						}
+						menu = 1;
+						break;
+					case 3:
+						printf("Back to Main Menu");
+						break;
+					default:
+						printf("Wrong, try again");
 				}
-				flag = 1;
-				break;
+               			 printf("\nPress any key to continue");
+               			 __fpurge(stdin);
+               			 getchar();
+               			 system("clear");
+			}while(opt1 !=3 && opt1 !=2);
+		
+		}else{
+			do{
+        			printf("#########################################################################################\n");
+               			printf("################################### PET SUBMENU #########################################\n");
+				printOnePet(pets[index]);
+				opt2 = modifyPetMenu(menu);
+				switch(opt2){
 
-			case 3:
-				if(flag == 1){
-					getString("Input New Pet's name: ", name);
-					strcpy(pets[index].name, name);
+				        case 1:
+				        	 getString("Input New Pet's name: ", name);
+				        	 strcpy(pets[index].name, name);
+				        	 break;
+				        case 2: 
+				        	 sex = getSex("Input new sex [f:m]: ");
+				        	 pets[index].sex = sex;
+				        	 break;
+				        case 3: 
+				        	 strcpy(pets[index].type, type);
+				        	 validateN = validateNumber("Input age: ", number, 10);
+				        	 pets[index].age = validateN;
+				        	 break;
+				        case 4: 
+				        	 printf("Input weight: ");
+				        	 __fpurge(stdin);
+				        	 scanf("%f", &weight);
+				        	 printf("Input Pet's ID first [2]");
+				        	 break;
+				        case 5: 
+				        	 getString("Input Pet's breed: ", race);
+				        	 strcpy(pets[index].race, race);
+				        	 break;
+				        case 6: 
+				        	 getString("Input Pet's type [gato:perro:raro]: ", type);
+				        	 validType = validateType(type);
+				        	 while(validType !=0){
+				        	 	getString("Error, input Pet's type [gato:perro:raro]: ", type);
+				        	 	validType = validateType(type);
+				        	 }
+				        	 break;
 
-				}else{
-					printf("Input Pet's ID first [2]");
-				}
-				break;
-			case 4:
-				if(flag == 1){
-					printf("Input new sex [f:m]: ");
-					__fpurge(stdin);
-					scanf("%c", &sexo);
-					while(sexo != 'f' && sexo != 'm'){
-						printf("Ingrese sexo [f:m]: ");
-						__fpurge(stdin);
-						scanf("%c", &sexo);
-					}
-					pets[index].sex = sexo;
-
-				}else{
-					printf("Input Pet's ID first [2]");
-				}
-				break;
-			case 5:
-				if(flag == 1){
-					strcpy(pets[index].type, type);
-					validateN = validateNumber("Input age: ", number, 10);
-					pets[index].age = validateN;
-
-				}else{
-					printf("Input Pet's ID first [2]");
-				}
-				break;
-			case 6:
-				if(flag == 1){
-					printf("Input weight: ");
-					__fpurge(stdin);
-					scanf("%f", &weight);
-					pets[index].weight = weight;
-
-				}else{
-					printf("Input Pet's ID first [2]");
-				}
-				break;
-			case 7:
-				if(flag == 1){
-					getString("Input Pet's race: ", race);
-					strcpy(pets[index].race, race);
-
-				}else{
-					printf("Input Pet's ID first [2]");
-				}
-				break;
-			case 8:
-				getString("Input Pet's type [gato:perro:raro]: ", type);
-				validType = validateType(type);
-				while(validType !=0){
-					getString("Error, input Pet's type [gato:perro:raro]: ", type);
-					validType = validateType(type);
-				}
-				break;
-
-			case 9:
-				printf("Back to MAIN MENU");
-				break;
-			default:
-				printf("Wrong, try again");
-		}// fin swtich
-		printf("\nPress any key to continue");
-		__fpurge(stdin); 
-		getchar();
-		system("clear");
-	}while(opt !=9); // fin while
+				        case 7: 
+				        	 printf("Back to MAIN MENU");
+						 menu = 0;
+				        	 break;
+				        default :
+				       	 printf("Wrong, try again");
+				}// fin swtich
+				printf("\nPress any key to continue");
+				__fpurge(stdin); 
+				getchar();
+				system("clear");
+			}while(opt2 !=7);
+		} // FIN ELSE
+	}while(opt1 !=3); // fin while
 }
 
 int validateType(char validar[]){
@@ -221,4 +224,21 @@ int validateType(char validar[]){
 	}
 
 	return valido;
+}
+
+void printPets(aPet pets[], int lenP){
+	char sp = ' ';
+        printf("\n#########################################################################################\n"
+               "###################################### PETS LIST ########################################\n"
+               "#########################################################################################\n");
+        printf("# ID_P%2cID_C%12cNAME%9cTYPE%13cBREED%8cWEIGHT%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp);
+        printf("#########################################################################################\n\n");
+
+	for(int x = 0; x < lenP; x++){
+		if(pets[x].isEmpty == OCU){
+			printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d\n", 
+					pets[x].idPet, pets[x].idClient, pets[x].name, pets[x].type,
+					pets[x].race,pets[x].sex,pets[x].weight, pets[x].age);
+		}
+	}
 }

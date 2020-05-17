@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdio_ext.h>
 #include"menu.h"
-#include"client_pet.h"
+#include"pet_client.h"
 
 int main(){
 
@@ -14,6 +14,8 @@ int main(){
 	hardCodePets(pets, TAM_M);
 	int resu;
 	int opt;
+//	int clientCounter = 0;
+//	int petCounter = 0;
 	int clientCounter = 104;
 	int petCounter = 211;
 
@@ -23,13 +25,25 @@ int main(){
 		switch(opt){
 
 			case 1:
-				printClientAndPet(clients, TAM_C, pets, TAM_M);
+				if(clientCounter < 1 || petCounter < 1){
+					printf("You need to add either a client [7] or a pet [4].");
+				}else{
+					printClientAndPet(clients, TAM_C, pets, TAM_M);
+				}
 				break;
 			case 2:
-				printClient(clients, TAM_C);
+				if(clientCounter < 1){
+					printf("You need to add a client first [7].");
+				}else{
+					printClient(clients, TAM_C);
+				}
 				break;
 			case 3:
-				printPets(pets, TAM_M);
+				if(petCounter < 1){
+					printf("You need to add a pet first [4].");
+				}else{
+					printPets(pets, TAM_M);
+				}
 				break;
 			case 4:
 				resu = createPet(pets, TAM_M, clients, TAM_C, petCounter);
@@ -41,7 +55,10 @@ int main(){
 				}
 				break;
 			case 5:
-				deletePet(pets, TAM_M);
+				resu = deletePet(pets, TAM_M);
+				if(resu == 0){
+					petCounter--;
+				}
 				break;
 			case 6:
 				modifyPet(pets, TAM_M);
@@ -56,6 +73,7 @@ int main(){
 				}
 				break;
 			case 8:
+				deleteAllFromClient(clients, TAM_C, pets, TAM_M); 
 				break;
 			case 9:
 				printf("BYE");

@@ -26,6 +26,7 @@ void initPet(aPet pets[], int len);
 void printPets(aPet pets[], int lenP);
 int findFreePetSpot(aPet pets[], int len);
 int validateType(char validar[]);
-void deletePet(aPet pets[], int len);
+int deletePet(aPet pets[], int len);
 int getPetById(aPet pets[], int len, int id);
 void modifyPet(aPet pets[], int len);
+void printOnePet(aPet pets);

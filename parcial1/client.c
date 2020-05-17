@@ -33,6 +33,7 @@ void initClient(aClient clients[], int len){
 }
 
 int findClientById(aClient clients[], int len, int id){
+
 	int validId = -1;
 
 	for(int x = 0; x < len; x ++){
@@ -95,14 +96,7 @@ int createClient(aClient clients[], int len, int count){
 		 strcpy(clients[index].locale, locale);
        		 getString("Input client's phone: ", phone);
 		 strcpy(clients[index].phone, phone);
-       		 printf("Input client's sex [f:m]: ");
-       		 __fpurge(stdin);
-       		 scanf("%c", &sex);
-       		 while(sex != 'f' && sex != 'm'){
-       		      printf("Error, only [f:m]: ");
-       		      __fpurge(stdin);
-       		      scanf("%c", &sex);
-       		 }
+		 sex = getSex("Input client's sex [f:m]: ");
 		 validNumber = validateNumber("Input client's age between 8 and 99: ", age, 4);
 		 while(validNumber < 8 || validNumber > 99){
 		 	validNumber = validateNumber("Error, onlye age between 8 and 99: ", age, 4);

@@ -51,3 +51,17 @@ int validateNumber(char msg[], char text[], int size){
 	resultado = atoi(text);
 	return resultado;
 }
+
+char getSex(char msg[]){
+	char sex;
+
+       	printf("%s", msg);
+       	__fpurge(stdin);
+       	scanf("%c", &sex);
+       	while(sex != 'f' && sex != 'm'){
+       	     printf("Error, only [f:m]: ");
+       	     __fpurge(stdin);
+       	     scanf("%c", &sex);
+       	}
+	return sex;
+}
