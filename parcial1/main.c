@@ -136,6 +136,9 @@ int main(){
 				averageWomen(clients, TAM_C);
 				break;
 			case 19:
+				showClientPetSameSex(clients, TAM_C, pets, TAM_M);
+				break;
+			case 20:
 				printf("BYE");
 				break;
 			default:
@@ -147,7 +150,7 @@ int main(){
 			getchar();
 			system("clear");
 		}
-	}while(opt != 19);
+	}while(opt != 20);
 	return 0;
 }
 

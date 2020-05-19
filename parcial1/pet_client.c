@@ -445,3 +445,31 @@ void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int l
 			break;
 	}
 }
+
+
+void showClientPetSameSex(aClient clients[], int lenC, aPet pets[], int lenP){
+
+	char sex;
+	sex = getSex("Input pet's sex to show[f:m]: ");
+	for(int j = 0; j < lenP; j++){
+		if(pets[j].sex == sex && pets[j].isEmpty == OCU){
+			printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d", 
+					pets[j].idPet, pets[j].idClient, pets[j].name, pets[j].type,
+					pets[j].race,pets[j].sex,pets[j].weight, pets[j].age);
+			for(int x = 0; x < lenC; x++){
+				if(pets[j].idClient == clients[x].idClient){
+					printf("%15s", clients[x].name);
+				}
+			
+			}
+			printf("\n");
+		}
+	}
+}
+	
+
+
+
+
+
+

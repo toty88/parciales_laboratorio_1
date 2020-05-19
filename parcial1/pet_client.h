@@ -115,3 +115,4 @@ int deletePet(aPet pets[], int len, aClient clients[], int lenC);
  *
  */
 void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP);
+void showClientPetSameSex(aClient clients[], int lenC, aPet pets[], int lenP);
