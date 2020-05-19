@@ -16,17 +16,10 @@ typedef struct {
 	char sex;
 	int age;
 	int idClient; // FK
+	int petCounter;
 	int isEmpty;
 
 }aClient;
-
-typedef struct{
-
-	int idClient; // PK
-	int counter;
-	int isEmpty;
-
-}aPetClientCounter;
 
 
 
@@ -39,13 +32,6 @@ typedef struct{
  */
 void hardCodeClient(aClient clients[], int len);
 
-/** \brief funcion que utilizamos para inicializar una cantidad de cantidad de mascotas
- *
- * \param petCount[] aPetClientCounter: el array de tipo aPetClientCounter
- * \return void: no retorna nada
- *
- */
-void hardCodePetCounter(aPetClientCounter petCount[]);
 
 /** \brief funcion que inicializa todas las variables isEmpty en cero
  *
@@ -79,13 +65,11 @@ int findClientById(aClient clients[], int len, int id);
  *
  * \param clients[] aClient: el array de tipo cliente
  * \param len int: la cantidad de elementos del array
- * \param count int: un contador de clientes que se utiliza para llamar a la funcoon getId
- * \param petCount[] aPetClientCounter: una variable de tipo aPetClientCounter para reservar un subndice dentro de
-                                        la estrucutara que utilizamos para contar la cantidad de mascotas por cliente
+ * \param count int: un contador de clientes que se utiliza para llamar a la funcion getId
  * \return int: retorna 0 si esta todo ok o -1 en caso de error
  *
  */
-int createClient(aClient clients[], int len, int count, aPetClientCounter petCount[]);
+int createClient(aClient clients[], int len, int count);
 
 /** \brief funcion que busca un indice libre dentro del array de estructuras cliente
  *
@@ -115,15 +99,6 @@ int modifyClient(aClient clients[], int len);
  */
 void printOneClient(aClient client);
 
-/** \brief funcion que inicializa todas las variables isEmpty de nuestro array de tipo estructura aPetClientCounter
- *
- * \param petCounter[] aPetClientCounter
- * \param len int: la cantidad de elementos del array
- * \return void: no retorna nada
- *
- */
-void initPetCounter(aPetClientCounter petCounter[], int len);
-
 /** \brief funcion que devuelve la edad promedio entre los clientes masculinos y femeninos
  *
  * \param clients[] aClient: el array de tipo cliente
@@ -132,3 +107,4 @@ void initPetCounter(aPetClientCounter petCounter[], int len);
  *
  */
 void averageAgeAmongClients(aClient clients[], int lenC);
+void averageMenAndWomen(aClient clients[], int lenC);

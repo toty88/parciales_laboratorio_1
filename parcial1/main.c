@@ -7,16 +7,13 @@
 int main(){
 
 	aClient clients[TAM_C];
-	aPetClientCounter counterOfPets[TAM_C];
 	aPet pets[TAM_M];
 
 	initClient(clients, TAM_C);
-	initPetCounter(counterOfPets, TAM_PC);
 	initPet(pets, TAM_M);
 
 	hardCodeClient(clients, TAM_C);
 	hardCodePets(pets, TAM_M);
-	hardCodePetCounter(counterOfPets);
 
 	int resu;
 	int opt;
@@ -61,7 +58,7 @@ int main(){
 				}
 				break;
 			case 5:
-				resu = deletePet(pets, TAM_M);
+				resu = deletePet(pets, TAM_M, clients, TAM_C);
 				if(resu == 0){
 					petCounter--;
 				}
@@ -79,7 +76,7 @@ int main(){
 				}
 				break;
 			case 7:
-				resu = createClient(clients, TAM_C, clientCounter, counterOfPets);
+				resu = createClient(clients, TAM_C, clientCounter);
 				if(resu == 0){
 					printf("Client created");
 					clientCounter++;
@@ -116,11 +113,11 @@ int main(){
 				printPetByChosenType(pets, TAM_M);
 				break;
 			case 14:
-				sortClientsByPetCount(clients, TAM_C, pets, TAM_M, counterOfPets, TAM_PC);
+				sortClientsByPetCount(clients, TAM_C, pets, TAM_M);
 				printClientAndPet(clients, TAM_C, pets, TAM_M);
 				break;
 			case 15:
-				sortClientByPetCountAndName(clients, TAM_C, pets, TAM_M, counterOfPets, TAM_PC);
+				sortClientByPetCountAndName(clients, TAM_C, pets, TAM_M);
 				printClientAndPet(clients, TAM_C, pets, TAM_M);
 				break;
 			case 16:
@@ -132,6 +129,8 @@ int main(){
 				break;
 			case 18:
 				averageAgeAmongClients(clients, TAM_C);
+				printf("\n");
+				averageMenAndWomen(clients, TAM_C);
 				break;
 			case 19:
 				printf("BYE");

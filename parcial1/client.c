@@ -11,6 +11,7 @@ void hardCodeClient(aClient clients[], int len){
 	char phone[5][20] = {"4442-4457", "4444-5667", "1234-6754", "9999-8888", "1235-8762"};
 	char sex[5]= {'f', 'm', 'f', 'm', 'm'};
 	int idClient[5] = {100, 101, 102, 103, 104};
+	int petCounter[5] ={2, 3, 2, 1, 3};
 	int isEmpty[5] = {OCU, OCU, OCU, OCU, OCU};
 	
 	for(int x = 0; x < 5; x++){
@@ -21,33 +22,16 @@ void hardCodeClient(aClient clients[], int len){
 		clients[x].sex = sex[x];
 		clients[x].age = age[x];
 		clients[x].isEmpty = isEmpty[x];
+		clients[x].petCounter = petCounter[x];
 		clients[x].idClient = idClient[x];
 	}
 }
 
-void hardCodePetCounter(aPetClientCounter petCount[]){
-
-	int idClient[5] = {100, 101, 102, 103, 104};
-	int counter[5] = {0,0,0,0,0};
-	int isEmpty[5] = {OCU, OCU, OCU, OCU, OCU};
-
-	for(int x = 0; x < 5; x++){
-		petCount[x].idClient = idClient[x];
-		petCount[x].counter = counter[x];
-		petCount[x].isEmpty = isEmpty[x];
-	}
-}
 
 void initClient(aClient clients[], int len){
 
 	for(int x = 0; x < len; x++){
 		clients[x].isEmpty = LIBRE;
-	}
-}
-
-void initPetCounter(aPetClientCounter petCounter[], int len){
-	for(int x = 0; x < len; x++){
-		petCounter[x].counter = 0;
 	}
 }
 
@@ -94,7 +78,7 @@ void printClient(aClient clients[], int lenC){
 	}
 }
 
-int createClient(aClient clients[], int len, int count, aPetClientCounter petCount[]){
+int createClient(aClient clients[], int len, int count){
 
 	int index;
         int output = -1;
@@ -123,8 +107,6 @@ int createClient(aClient clients[], int len, int count, aPetClientCounter petCou
 		 }
 		 clients[index].age = validNumber;
 		 clients[index].idClient = getId(count, 1);
-		 petCount[index].idClient = clients[index].idClient;
-		 petCount[index].isEmpty = OCU;
 		 clients[index].isEmpty = OCU;
 		 clients[index].sex = sex;
        		 output = 0;
@@ -280,7 +262,33 @@ void averageAgeAmongClients(aClient clients[], int lenC){
 	}
 }
 
+void averageMenAndWomen(aClient clients[], int lenC){
 
+	int countM = 0;
+	int countF = 0;
+	int totalMyF;
+	float averageM;
+	float averageF;
+	char por = '%';
 
+	float resuM;
+	float resuF;
 
+	for(int x = 0; x < lenC; x++){
+		if(clients[x].isEmpty == OCU){
+			if(clients[x].sex == 'm'){
+				countM++;
+			}else{
+				countF++;
+			}
+		}
+	}
 
+	totalMyF = countM + countF;
+	averageM = (countM*100)/totalMyF;
+	averageF = (countF*100)/totalMyF;
+
+	printf("Average man among clients -> %.0f%c", averageM, por);
+	printf("\nAverage female among clients -> %.0f%c",  averageF, por);
+
+}

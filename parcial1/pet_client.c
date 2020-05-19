@@ -125,6 +125,7 @@ int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count){
 		
 		pets[index].idPet = getId(count, 2);
 		pets[index].idClient = clients[clientIndex].idClient;
+		clients[clientIndex].petCounter++;
 		pets[index].isEmpty = OCU;
 		resu = 0;
 	}
@@ -223,44 +224,61 @@ void sortPetByType(aClient clients[], aPet pets[], int lenC, int lenP){
 
 void printClientsWithMoreThanOnePet(aClient clients[], int lenC, aPet pets[], int lenP){
 
-	int petCounter;
 	char sp = ' ';
         printf("###############################################################################\n");
         printf("# %2cID%7cFNAME%9cLNAME%10cLOCALE%6cTELEPHONE%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp);
         printf("###############################################################################\n");
 
 	for(int x = 0; x < lenC; x++){
-		petCounter = 0;
-		for(int j = 0; j < lenP; j++){
-			if(pets[j].idClient == clients[x].idClient){
-				petCounter++;
+			if(clients[x].isEmpty == OCU && clients[x].petCounter > 1){
+				printOneClient(clients[x]);
 			}
 		}
-		if(clients[x].isEmpty == OCU && petCounter>1){
-			printOneClient(clients[x]);
-		}
-	}
         printf("###############################################################################\n");
 }
 	
+int deletePet(aPet pets[], int len, aClient clients[], int lenC){
 
-void countPetsPerClient(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
-
-	initPetCounter(pCount, lenPC);
-	for(int x = 0; x < lenC; x++){
-		for(int j = 0; j < lenP; j++){
-			if(clients[x].idClient == pets[j].idClient && clients[x].isEmpty == OCU){
-				pCount[x].counter +=1;	
+	char number[10];
+	int validateN;
+	int index;
+	int clientID;
+	int output = -1;
+	printPets(pets, len);
+	char opt;
+	validateN = validateNumber("Input Pet ID: ", number, 10);
+	index = getPetById(pets, len, validateN);
+	while(index == -1){
+		validateN = validateNumber("Wrong ID, try again: ", number, 10);
+		index = getPetById(pets, len, validateN);
+	}
+	printf("You're about to remove %s. Are you sure [y:n] ", pets[index].name);
+	__fpurge(stdin);
+	scanf("%c", &opt);
+	while(opt !='y' && opt !='n'){
+		printf("Wrong, Are you sure [y:n] ");
+		__fpurge(stdin);
+		scanf("%c", &opt);
+	}
+	if(opt == 'y'){
+		for(int x = 0; x < lenC; x++){
+			if(clients[x].idClient == pets[index].idClient){
+				clients[x].petCounter--;
 			}
 		}
+		pets[index].isEmpty = LIBRE;
+		output = 0;
+		printf("Pet deleted");
+	}else{
+		printf("No pet deleted");
 	}
+	return output;
 }
 
-void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
+
+void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP){
 	
 	aClient auxClient;
-	aPetClientCounter auxPetCounter;
-	countPetsPerClient(clients, lenC, pets, lenP, pCount, lenPC);
 	char number[4];
 	int option;
 	option = validateNumber("Wanna sort pet amounts by UP [1] or DOWN [2]: ", number, 4);
@@ -270,13 +288,9 @@ void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, a
 	switch(option){
 		
 		case 1:
-			for(int x = 0; x < lenC -1; x++){
+			for(int x = 0; x < lenC-1; x++){
 				for(int j = x+1; j < lenC; j++){
-					if(pCount[x].counter > pCount[j].counter && pCount[x].isEmpty == OCU){
-						
-						auxPetCounter = pCount[x];
-						pCount[x] = pCount[j];
-						pCount[j] = auxPetCounter;
+					if(clients[x].petCounter > clients[j].petCounter){
 		
 						auxClient = clients[x];
 						clients[x] = clients[j];
@@ -286,13 +300,9 @@ void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, a
 			}
 			break;
 		case 2:
-			for(int x = 0; x < lenC -1; x++){
+			for(int x = 0; x < lenC-1; x++){
 				for(int j = x+1; j < lenC; j++){
-					if(pCount[x].counter < pCount[j].counter && pCount[x].isEmpty == OCU){
-						
-						auxPetCounter = pCount[x];
-						pCount[x] = pCount[j];
-						pCount[j] = auxPetCounter;
+					if(clients[x].petCounter < clients[j].petCounter){
 		
 						auxClient = clients[x];
 						clients[x] = clients[j];
@@ -305,11 +315,9 @@ void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, a
 }
 
 
-void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
+void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP){
 	
 	aClient auxClient;
-	aPetClientCounter auxPetCounter;
-	countPetsPerClient(clients, lenC, pets, lenP, pCount, lenPC);
 	char number[4];
 	int option;
 	option = validateNumber("(1). Sort pet amounts by UP and clients names by UP"
@@ -324,22 +332,14 @@ void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int l
 			for(int x = 0; x < lenC -1; x++){
 				for(int j = x+1; j < lenC; j++){
 					if(clients[x].isEmpty == OCU){
-						if(pCount[x].counter > pCount[j].counter){
-							
-							auxPetCounter = pCount[x];
-							pCount[x] = pCount[j];
-							pCount[j] = auxPetCounter;
-	
+						if(clients[x].petCounter > clients[j].petCounter){
+
 							auxClient = clients[x];
 							clients[x] = clients[j];
 							clients[j] = auxClient;
 	
 						}else {
-							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))>0){
-	
-								auxPetCounter = pCount[x];
-								pCount[x] = pCount[j];
-								pCount[j] = auxPetCounter;
+							if(clients[x].petCounter == clients[j].petCounter&& (strcmp(clients[x].name, clients[j].name))>0){
 	
 								auxClient = clients[x];
 								clients[x] = clients[j];
@@ -354,22 +354,14 @@ void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int l
 			for(int x = 0; x < lenC -1; x++){
 				for(int j = x+1; j < lenC; j++){
 					if(clients[x].isEmpty == OCU){
-						if(pCount[x].counter > pCount[j].counter){
-							
-							auxPetCounter = pCount[x];
-							pCount[x] = pCount[j];
-							pCount[j] = auxPetCounter;
-	
+						if(clients[x].petCounter > clients[j].petCounter){
+
 							auxClient = clients[x];
 							clients[x] = clients[j];
 							clients[j] = auxClient;
 	
 						}else {
-							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))<0){
-	
-								auxPetCounter = pCount[x];
-								pCount[x] = pCount[j];
-								pCount[j] = auxPetCounter;
+							if(clients[x].petCounter == clients[j].petCounter&& (strcmp(clients[x].name, clients[j].name))<0){
 	
 								auxClient = clients[x];
 								clients[x] = clients[j];
@@ -384,22 +376,14 @@ void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int l
 			for(int x = 0; x < lenC -1; x++){
 				for(int j = x+1; j < lenC; j++){
 					if(clients[x].isEmpty == OCU){
-						if(pCount[x].counter < pCount[j].counter){
-							
-							auxPetCounter = pCount[x];
-							pCount[x] = pCount[j];
-							pCount[j] = auxPetCounter;
-	
+						if(clients[x].petCounter < clients[j].petCounter){
+
 							auxClient = clients[x];
 							clients[x] = clients[j];
 							clients[j] = auxClient;
 	
 						}else {
-							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))>0){
-	
-								auxPetCounter = pCount[x];
-								pCount[x] = pCount[j];
-								pCount[j] = auxPetCounter;
+							if(clients[x].petCounter == clients[j].petCounter && (strcmp(clients[x].name, clients[j].name))>0){
 	
 								auxClient = clients[x];
 								clients[x] = clients[j];
@@ -414,22 +398,14 @@ void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int l
 			for(int x = 0; x < lenC -1; x++){
 				for(int j = x+1; j < lenC; j++){
 					if(clients[x].isEmpty == OCU){
-						if(pCount[x].counter < pCount[j].counter){
-							
-							auxPetCounter = pCount[x];
-							pCount[x] = pCount[j];
-							pCount[j] = auxPetCounter;
-	
+						if(clients[x].petCounter < clients[j].petCounter){
+
 							auxClient = clients[x];
 							clients[x] = clients[j];
 							clients[j] = auxClient;
 	
 						}else {
-							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))<0){
-	
-								auxPetCounter = pCount[x];
-								pCount[x] = pCount[j];
-								pCount[j] = auxPetCounter;
+							if(clients[x].petCounter == clients[j].petCounter && (strcmp(clients[x].name, clients[j].name))<0){
 	
 								auxClient = clients[x];
 								clients[x] = clients[j];

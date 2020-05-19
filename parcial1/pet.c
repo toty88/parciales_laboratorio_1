@@ -65,38 +65,6 @@ int getPetById(aPet pets[], int len, int id){
 	return index;
 }
 
-int deletePet(aPet pets[], int len){
-
-	char number[10];
-	int validateN;
-	int index;
-	int output = -1;
-	printPets(pets, len);
-	char opt;
-	validateN = validateNumber("Input Pet ID: ", number, 10);
-	index = getPetById(pets, len, validateN);
-	while(index == -1){
-		validateN = validateNumber("Wrong ID, try again: ", number, 10);
-		index = getPetById(pets, len, validateN);
-	}
-	printf("You're about to remove %s. Are you sure [y:n] ", pets[index].name);
-	__fpurge(stdin);
-	scanf("%c", &opt);
-	while(opt !='y' && opt !='n'){
-		printf("Wrong, Are you sure [y:n] ");
-		__fpurge(stdin);
-		scanf("%c", &opt);
-	}
-	if(opt == 'y'){
-		pets[index].isEmpty = LIBRE;
-		output = 0;
-		printf("Pet deleted");
-	}else{
-		printf("No pet deleted");
-	}
-	return output;
-}
-
 int modifyPet(aPet pets[], int len){
 
 	char number[10];

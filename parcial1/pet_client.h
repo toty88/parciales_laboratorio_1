@@ -83,20 +83,6 @@ void sortPetByType(aClient clients[], aPet pets[], int lenC, int lenP);
  */
 void printClientsWithMoreThanOnePet(aClient clients[], int lenC, aPet pets[], int lenP);
 
-/** \brief funcion que cuenta la cantidad de mascotas que posee un cliente y guarda el valor en una variable
-           dentro de la estructura de tipo aPetClientCounter que se relacion con el cliente a traves del idClient
- *
- * \param clients[] aClient: el array de tipo cliente
- * \param lenC int: la cantidad de elementos del array cliente
- * \param pets[] aPet: el array de tipo mascota
- * \param lenP int: la cantidad de elementos del array mascota
- * \param pCount[] aPetClientCounter: el array de tipo contador de mascotas
- * \param lenPC int: la cantidad de elementos del array contador de mascotas
- * \return void: no retorna nada
- *
- */
-void countPetsPerClient(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC);
-
 /** \brief funcion que ordena a los clientes en funcion de la cantidad de mascotas
            la funcion brinda opcions para ver el listado de forma ascendente o descendente
  *
@@ -104,12 +90,19 @@ void countPetsPerClient(aClient clients[], int lenC, aPet pets[], int lenP, aPet
  * \param lenC int: la cantidad de elementos del array cliente
  * \param pets[] aPet: el array de tipo mascota
  * \param lenP int: la cantidad de elementos del array mascota
- * \param pCount[] aPetClientCounter: el array de tipo contador de mascotas
- * \param lenPC int: la cantidad de elementos del array contador de mascotas
  * \return void
  *
  */
-void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC);
+void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP);
+
+/** \brief funcion que permite eliminar una mascota
+ *
+ * \param pets[] aPet: el array de tipo mascota
+ * \param len int: la cantidad de elementos
+ * \return int: retorna 0 en caso de eliminar una mascota o -1 en caso contrario
+ *
+ */
+int deletePet(aPet pets[], int len, aClient clients[], int lenC);
 
 /** \brief funcion que ordena a los clientes en funcion de la cantidad de mascotas y cuando estas son iguales en funcion
            del nombre, brinda 4 tipos de ordenamiento posible
@@ -118,9 +111,7 @@ void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, a
  * \param lenC int: la cantidad de elementos del array cliente
  * \param pets[] aPet: el array de tipo mascota
  * \param lenP int: la cantidad de elementos del array mascota
- * \param pCount[] aPetClientCounter: el array de tipo contador de mascotas
- * \param lenPC int: la cantidad de elementos del array contador de mascotas
  * \return void: no retorna nada
  *
  */
-void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC);
+void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP);

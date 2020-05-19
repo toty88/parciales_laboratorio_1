@@ -65,14 +65,6 @@ int findFreePetSpot(aPet pets[], int len);
  */
 int validateType(char validar[]);
 
-/** \brief funcion que permite eliminar una mascota
- *
- * \param pets[] aPet: el array de tipo mascota
- * \param len int: la cantidad de elementos
- * \return int: retorna 0 en caso de eliminar una mascota o -1 en caso contrario
- *
- */
-int deletePet(aPet pets[], int len);
 
 /** \brief funcion que busca una mascota de acuerdo a un ID proporcionado por el usuario
  *
