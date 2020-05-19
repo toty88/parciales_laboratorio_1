@@ -9,7 +9,7 @@ void hardCodeClient(aClient clients[], int len){
 	char last_name[5][30] = {"GONZALEZ", "LORENZO", "HERNANDEZ", "GRECCO", "UZZO"};
 	char locale[5][30] = {"ALDO BONZI", "CASANOVA", "TAPIALES", "CABA", "BERAZATEGUI"};
 	char phone[5][20] = {"4442-4457", "4444-5667", "1234-6754", "9999-8888", "1235-8762"};
-	char sex[5]= {'f', 'm', 'f', 'm', 'f'};
+	char sex[5]= {'f', 'm', 'f', 'm', 'm'};
 	int idClient[5] = {100, 101, 102, 103, 104};
 	int isEmpty[5] = {OCU, OCU, OCU, OCU, OCU};
 	
@@ -242,3 +242,45 @@ int modifyClient(aClient clients[], int len){
 	}while(opt1 !=3); // fin while
 	return output;
 }
+
+void averageAgeAmongClients(aClient clients[], int lenC){
+
+	int countM = 0;
+	int sumM = 0;
+	int countF = 0;
+	int sumF = 0;
+
+	float resuM;
+	float resuF;
+
+	for(int x = 0; x < lenC; x++){
+		if(clients[x].isEmpty == OCU){
+			if(clients[x].sex == 'm'){
+				countM++;
+				sumM +=clients[x].age;
+			}else{
+				countF++;
+				sumF+=clients[x].age;
+			}
+		}
+	}
+	resuM = (float)sumM/countM;
+	resuF = (float)sumF/countF;
+
+	if(countF == 0){
+		printf("\nThere are no females");
+	}else{
+		printf("\nAverage Age among female clients -> %.2f", resuF);
+	}
+
+	if(countM == 0){
+		printf("\nThere are no males");
+	}else{
+		printf("\nAverage Age among male clients -> %.2f", resuM);
+	}
+}
+
+
+
+
+

@@ -8,11 +8,11 @@ void printClientAndPet(aClient clients[], int lenC, aPet pets[], int lenP){
         printf("\n############################################################################################################\n"
                "######################################### CLIENT WITH PETS LIST ############################################\n"
                "############################################################################################################\n");
-        printf("# %5cID%7cFNAME%9cLNAME%10cLOCALE%6cTELEPHONE%5cSEX%5cAGE%15cPETS\n", sp, sp, sp, sp, sp, sp, sp, sp);
+        printf("# %4cID%7cFNAME%9cLNAME%10cLOCALE%6cTELEPHONE%5cSEX%5cAGE%15cPETS\n", sp, sp, sp, sp, sp, sp, sp, sp);
         printf("############################################################################################################\n\n");
 	for(int x = 0; x < lenC; x++){
 		if(clients[x].isEmpty == OCU){
-			printf("%d) %6d%12s%14s%16s%15s%8c%8d%5c", x+1, clients[x].idClient, clients[x].name, clients[x].last_name, 
+			printf("# %6d%12s%14s%16s%15s%8c%8d%5c", clients[x].idClient, clients[x].name, clients[x].last_name, 
 						clients[x].locale, clients[x].phone, clients[x].sex, 
 						clients[x].age, sp);
 			for(int j = 0; j < lenP; j++){
@@ -221,7 +221,7 @@ void sortPetByType(aClient clients[], aPet pets[], int lenC, int lenP){
 	printPetAndClient(pets, lenP, clients, lenC);
 }
 
-int printClientsWithMoreThanOnePet(aClient clients[], int lenC, aPet pets[], int lenP){
+void printClientsWithMoreThanOnePet(aClient clients[], int lenC, aPet pets[], int lenP){
 
 	int petCounter;
 	char sp = ' ';
@@ -243,72 +243,202 @@ int printClientsWithMoreThanOnePet(aClient clients[], int lenC, aPet pets[], int
         printf("###############################################################################\n");
 }
 	
-void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
-	
-	aClient auxClient;
-	aPetClientCounter auxPetCounter;
+
+void countPetsPerClient(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
+
 	initPetCounter(pCount, lenPC);
 	for(int x = 0; x < lenC; x++){
 		for(int j = 0; j < lenP; j++){
 			if(clients[x].idClient == pets[j].idClient && clients[x].isEmpty == OCU){
 				pCount[x].counter +=1;	
-			}
-		}
-	}
-	for(int x = 0; x < lenC -1; x++){
-		for(int j = x+1; j < lenC; j++){
-			if(pCount[x].counter < pCount[j].counter && pCount[x].isEmpty == OCU){
-				
-				auxPetCounter = pCount[x];
-				pCount[x] = pCount[j];
-				pCount[j] = auxPetCounter;
-
-				auxClient = clients[x];
-				clients[x] = clients[j];
-				clients[j] = auxClient;
 			}
 		}
 	}
 }
 
-void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
+void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
 	
 	aClient auxClient;
 	aPetClientCounter auxPetCounter;
-	initPetCounter(pCount, lenPC);
-	for(int x = 0; x < lenC; x++){
-		for(int j = 0; j < lenP; j++){
-			if(clients[x].idClient == pets[j].idClient && clients[x].isEmpty == OCU){
-				pCount[x].counter +=1;	
-			}
-		}
+	countPetsPerClient(clients, lenC, pets, lenP, pCount, lenPC);
+	char number[4];
+	int option;
+	option = validateNumber("Wanna sort pet amounts by UP [1] or DOWN [2]: ", number, 4);
+	while(option != 1 && option != 2){
+		option = validateNumber("Wrong, only UP [1] or DOWN [2]: ", number, 4);
 	}
-	for(int x = 0; x < lenC -1; x++){
-		for(int j = x+1; j < lenC; j++){
-			if(clients[x].isEmpty == OCU){
-				if(pCount[x].counter < pCount[j].counter){
-					
-					auxPetCounter = pCount[x];
-					pCount[x] = pCount[j];
-					pCount[j] = auxPetCounter;
-
-					auxClient = clients[x];
-					clients[x] = clients[j];
-					clients[j] = auxClient;
-
-				}else {
-					if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))>0){
-
+	switch(option){
+		
+		case 1:
+			for(int x = 0; x < lenC -1; x++){
+				for(int j = x+1; j < lenC; j++){
+					if(pCount[x].counter > pCount[j].counter && pCount[x].isEmpty == OCU){
+						
 						auxPetCounter = pCount[x];
 						pCount[x] = pCount[j];
 						pCount[j] = auxPetCounter;
-
+		
 						auxClient = clients[x];
 						clients[x] = clients[j];
 						clients[j] = auxClient;
 					}
 				}
 			}
+			break;
+		case 2:
+			for(int x = 0; x < lenC -1; x++){
+				for(int j = x+1; j < lenC; j++){
+					if(pCount[x].counter < pCount[j].counter && pCount[x].isEmpty == OCU){
+						
+						auxPetCounter = pCount[x];
+						pCount[x] = pCount[j];
+						pCount[j] = auxPetCounter;
+		
+						auxClient = clients[x];
+						clients[x] = clients[j];
+						clients[j] = auxClient;
+					}
+				}
+			}
+			break;
 		}
+}
+
+
+void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int lenP, aPetClientCounter pCount[], int lenPC){
+	
+	aClient auxClient;
+	aPetClientCounter auxPetCounter;
+	countPetsPerClient(clients, lenC, pets, lenP, pCount, lenPC);
+	char number[4];
+	int option;
+	option = validateNumber("(1). Sort pet amounts by UP and clients names by UP"
+				"\n(2). Sort pet amounts by UP and clients names by DOWN"
+				"\n(3). Sort pet amounts by DOWN and clients names by UP"
+				"\n(4). Sort pet amounts by DOWN and clients names by DOWN: " , number, 4);
+	while(option != 1 && option != 2 && option != 3 && option !=4){
+		option = validateNumber("Wrong, only [1], [2], [3] or [4]: ", number, 4);
+	}
+	switch(option){
+		case 1:
+			for(int x = 0; x < lenC -1; x++){
+				for(int j = x+1; j < lenC; j++){
+					if(clients[x].isEmpty == OCU){
+						if(pCount[x].counter > pCount[j].counter){
+							
+							auxPetCounter = pCount[x];
+							pCount[x] = pCount[j];
+							pCount[j] = auxPetCounter;
+	
+							auxClient = clients[x];
+							clients[x] = clients[j];
+							clients[j] = auxClient;
+	
+						}else {
+							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))>0){
+	
+								auxPetCounter = pCount[x];
+								pCount[x] = pCount[j];
+								pCount[j] = auxPetCounter;
+	
+								auxClient = clients[x];
+								clients[x] = clients[j];
+								clients[j] = auxClient;
+							}
+						}
+					}
+				}
+			}
+			break;
+		case 2:
+			for(int x = 0; x < lenC -1; x++){
+				for(int j = x+1; j < lenC; j++){
+					if(clients[x].isEmpty == OCU){
+						if(pCount[x].counter > pCount[j].counter){
+							
+							auxPetCounter = pCount[x];
+							pCount[x] = pCount[j];
+							pCount[j] = auxPetCounter;
+	
+							auxClient = clients[x];
+							clients[x] = clients[j];
+							clients[j] = auxClient;
+	
+						}else {
+							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))<0){
+	
+								auxPetCounter = pCount[x];
+								pCount[x] = pCount[j];
+								pCount[j] = auxPetCounter;
+	
+								auxClient = clients[x];
+								clients[x] = clients[j];
+								clients[j] = auxClient;
+							}
+						}
+					}
+				}
+			}
+			break;
+		case 3:
+			for(int x = 0; x < lenC -1; x++){
+				for(int j = x+1; j < lenC; j++){
+					if(clients[x].isEmpty == OCU){
+						if(pCount[x].counter < pCount[j].counter){
+							
+							auxPetCounter = pCount[x];
+							pCount[x] = pCount[j];
+							pCount[j] = auxPetCounter;
+	
+							auxClient = clients[x];
+							clients[x] = clients[j];
+							clients[j] = auxClient;
+	
+						}else {
+							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))>0){
+	
+								auxPetCounter = pCount[x];
+								pCount[x] = pCount[j];
+								pCount[j] = auxPetCounter;
+	
+								auxClient = clients[x];
+								clients[x] = clients[j];
+								clients[j] = auxClient;
+							}
+						}
+					}
+				}
+			}
+			break;
+		case 4:
+			for(int x = 0; x < lenC -1; x++){
+				for(int j = x+1; j < lenC; j++){
+					if(clients[x].isEmpty == OCU){
+						if(pCount[x].counter < pCount[j].counter){
+							
+							auxPetCounter = pCount[x];
+							pCount[x] = pCount[j];
+							pCount[j] = auxPetCounter;
+	
+							auxClient = clients[x];
+							clients[x] = clients[j];
+							clients[j] = auxClient;
+	
+						}else {
+							if(pCount[x].counter == pCount[j].counter && (strcmp(clients[x].name, clients[j].name))<0){
+	
+								auxPetCounter = pCount[x];
+								pCount[x] = pCount[j];
+								pCount[j] = auxPetCounter;
+	
+								auxClient = clients[x];
+								clients[x] = clients[j];
+								clients[j] = auxClient;
+							}
+						}
+					}
+				}
+			}
+			break;
 	}
 }

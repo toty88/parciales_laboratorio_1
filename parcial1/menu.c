@@ -21,7 +21,10 @@ int mainMenu(){
 		"(13). SHOW PETS BY CHOSEN TYPE\n"
 		"(14). SORT CLIENTS BY PET AMOUNT\n"
 		"(15). SORT CLIENTS BY PET AMOUNT AND NAME\n"
-		"(20). EXIT ");
+		"(16). SHOW AVERAGE PET AGE\n"
+		"(17). SHOW AVERAGE PET AGE BY TYPE\n"
+		"(18). SHOW AVERAGE AGE AMONG MALE AND FEMALE CLIENTS\n"
+		"(19). EXIT ");
 		
 	scanf("%d", &opt); 
 	return opt;

@@ -123,7 +123,17 @@ int main(){
 				sortClientByPetCountAndName(clients, TAM_C, pets, TAM_M, counterOfPets, TAM_PC);
 				printClientAndPet(clients, TAM_C, pets, TAM_M);
 				break;
-			case 20:
+			case 16:
+
+				printf("Average Age -> %.2f", promedioEdadMascota(pets, TAM_M));
+				break;
+			case 17:
+				promedioEdadMascotasPorTipo(pets, TAM_M);
+				break;
+			case 18:
+				averageAgeAmongClients(clients, TAM_C);
+				break;
+			case 19:
 				printf("BYE");
 				break;
 			default:
@@ -135,7 +145,7 @@ int main(){
 			getchar();
 			system("clear");
 		}
-	}while(opt != 20);
+	}while(opt != 19);
 	return 0;
 }
 

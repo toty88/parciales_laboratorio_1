@@ -54,7 +54,6 @@ int findFreePetSpot(aPet pets[], int len){
 	return index;
 }
 
-
 int getPetById(aPet pets[], int len, int id){
 	int index = -1;
 	for(int x = 0; x < len; x++){
@@ -271,3 +270,43 @@ void printPetByChosenType(aPet pets[], int lenP){
 		}
 	}
 }
+
+float promedioEdadMascota(aPet pets[], int lenP){
+	int count = 0;
+	int sum = 0;
+	float resu;
+
+	for(int x = 0; x < lenP; x++){
+		if(pets[x].isEmpty == OCU){
+			sum +=pets[x].age;
+			count++;
+		}
+	}
+
+	resu = (float)sum/count;
+	return resu;
+}
+
+void promedioEdadMascotasPorTipo(aPet pets[], int lenP){
+
+	int count = 0;
+	int sum = 0;
+	float resu;
+	char type[30];
+	int validType;
+	getString("What type Do wish you to get average age of [perro:gato:raro]: ", type);
+	validType = validateType(type);
+	while(validType !=0){
+		getString("Error, only types [gato:perro:raro]: ", type);
+		validType = validateType(type);
+	}
+	for(int x = 0; x < lenP; x++){
+		if(pets[x].isEmpty == OCU && strcmp(pets[x].type, type) == 0){
+			sum +=pets[x].age;
+			count++;
+		}
+	}
+	resu = (float)sum/count;
+	printf("Average Age of type %s -> %.2f",type, resu);
+}
+
