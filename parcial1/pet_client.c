@@ -186,32 +186,36 @@ void sortPetByType(aClient clients[], aPet pets[], int lenC, int lenP){
 	char number[4];
 	int option;
 	char sp = ' ';
-	option = validateNumber("Wanna sort pet types by UP [1] or DOWN [0]: ", number, 4);
-	while(option != 1 && option != 0){
-		option = validateNumber("Wrong, only UP [1] or DOWN [0]: ", number, 4);
+	option = validateNumber("Sort pet types by UP [1] or DOWN [2]: ", number, 4);
+	while(option != 1 && option != 2){
+		option = validateNumber("Wrong, only UP [1] or DOWN [2]: ", number, 4);
 	}
 
 	
-	if(option == 1){
-		for(int x = 0; x < lenP-1; x++){
-			for(int j = x+1; j < lenP; j++){
-				if(strcmp(pets[x].type, pets[j].type)>0){
-					auxPet = pets[x];
-					pets[x] = pets[j];
-					pets[j] = auxPet;
+	switch(option){
+
+		case 1:
+			for(int x = 0; x < lenP-1; x++){
+				for(int j = x+1; j < lenP; j++){
+					if(strcmp(pets[x].type, pets[j].type)>0){
+						auxPet = pets[x];
+						pets[x] = pets[j];
+						pets[j] = auxPet;
+					}
 				}
 			}
-		}
-	}else{
-		for(int x = 0; x < lenP-1; x++){
-			for(int j = x+1; j < lenP; j++){
-				if(strcmp(pets[x].type, pets[j].type)<0){
-					auxPet = pets[x];
-					pets[x] = pets[j];
-					pets[j] = auxPet;
+			break;
+		case 2:
+			for(int x = 0; x < lenP-1; x++){
+				for(int j = x+1; j < lenP; j++){
+					if(strcmp(pets[x].type, pets[j].type)<0){
+						auxPet = pets[x];
+						pets[x] = pets[j];
+						pets[j] = auxPet;
+					}
 				}
 			}
-		}
+			break;
 	}
 
         printf("\n############################################################################################################\n"
@@ -281,7 +285,7 @@ void sortClientsByPetCount(aClient clients[], int lenC, aPet pets[], int lenP){
 	aClient auxClient;
 	char number[4];
 	int option;
-	option = validateNumber("Wanna sort pet amounts by UP [1] or DOWN [2]: ", number, 4);
+	option = validateNumber("Sort pet quantity by UP [1] or DOWN [2]: ", number, 4);
 	while(option != 1 && option != 2){
 		option = validateNumber("Wrong, only UP [1] or DOWN [2]: ", number, 4);
 	}
@@ -320,10 +324,10 @@ void sortClientByPetCountAndName(aClient clients[], int lenC, aPet pets[], int l
 	aClient auxClient;
 	char number[4];
 	int option;
-	option = validateNumber("(1). Sort pet amounts by UP and clients names by UP"
-				"\n(2). Sort pet amounts by UP and clients names by DOWN"
-				"\n(3). Sort pet amounts by DOWN and clients names by UP"
-				"\n(4). Sort pet amounts by DOWN and clients names by DOWN: " , number, 4);
+	option = validateNumber("(1). Sort pet quantity by UP and client names by UP"
+				"\n(2). Sort pet quantity by UP and client names by DOWN"
+				"\n(3). Sort pet quantity by DOWN and client names by UP"
+				"\n(4). Sort pet quantity by DOWN and client names by DOWN: " , number, 4);
 	while(option != 1 && option != 2 && option != 3 && option !=4){
 		option = validateNumber("Wrong, only [1], [2], [3] or [4]: ", number, 4);
 	}

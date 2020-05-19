@@ -111,7 +111,7 @@ void printPetByChosenType(aPet pets[], int lenP);
  * \return float: se retorna el promedio calculado
  *
  */
-float promedioEdadMascota(aPet pets[], int lenP);
+float averagePetAge(aPet pets[], int lenP);
 
 /** \brief funcion que calcula el promedo de edad segun tipo de mascota
  *
@@ -120,4 +120,4 @@ float promedioEdadMascota(aPet pets[], int lenP);
  * \return void: no retorna nada
  *
  */
-void promedioEdadMascotasPorTipo(aPet pets[], int lenP);
+void averagePetAgeByType(aPet pets[], int lenP);

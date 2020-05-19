@@ -24,7 +24,8 @@ int mainMenu(){
 		"(16). SHOW AVERAGE PET AGE\n"
 		"(17). SHOW AVERAGE PET AGE BY TYPE\n"
 		"(18). SHOW AVERAGE AGE AMONG MALE AND FEMALE CLIENTS\n"
-		"(19). EXIT ");
+		"(19). EXIT \n"
+		"(#).  -----> CHOICE: ");
 		
 	scanf("%d", &opt); 
 	return opt;

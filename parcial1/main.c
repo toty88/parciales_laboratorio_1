@@ -122,10 +122,10 @@ int main(){
 				break;
 			case 16:
 
-				printf("Average Age -> %.2f", promedioEdadMascota(pets, TAM_M));
+				printf("Average Age -> %.2f", averagePetAge(pets, TAM_M));
 				break;
 			case 17:
-				promedioEdadMascotasPorTipo(pets, TAM_M);
+				averagePetAgeByType(pets, TAM_M);
 				break;
 			case 18:
 				averageAgeAmongClients(clients, TAM_C);

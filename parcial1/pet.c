@@ -239,7 +239,7 @@ void printPetByChosenType(aPet pets[], int lenP){
 	}
 }
 
-float promedioEdadMascota(aPet pets[], int lenP){
+float averagePetAge(aPet pets[], int lenP){
 	int count = 0;
 	int sum = 0;
 	float resu;
@@ -255,7 +255,7 @@ float promedioEdadMascota(aPet pets[], int lenP){
 	return resu;
 }
 
-void promedioEdadMascotasPorTipo(aPet pets[], int lenP){
+void averagePetAgeByType(aPet pets[], int lenP){
 
 	int count = 0;
 	int sum = 0;
