@@ -19,9 +19,6 @@ void hardCodePets(aPet pets[], int len){
 	char name[11][30] = {"FIRULAIS", "ATHOS", "ZEUS", "ERGO", "ATHILA", "PEPITO", 
 		"ROCKET", "CEREBRO", "SONRISAS", "HUMOROSO", "GRUTI"};
 
-	char race[11][30] = {"SIAMES", "SIAMES", "OVEJERO", "OVEJERO", "PERSA", 
-		"PITBULL", "IGUANA DE SOL", "LABRADOR", "CALLEJERO", "CALLEJERO", "BULLDOG"};
-
 	char type[11][30] = {"GATO", "GATO", "PERRO", "PERRO", "GATO", "PERRO", 
 		"RARO", "PERRO", "GATO", "GATO", "PERRO"};
 
@@ -35,7 +32,6 @@ void hardCodePets(aPet pets[], int len){
 	for(int x = 0; x < 11; x++){
 		pets[x].age = age[x];
 		strcpy(pets[x].name, name[x]);
-		strcpy(pets[x].race, race[x]);
 		strcpy(pets[x].type, type[x]);
 		pets[x].sex = sex[x];
 		pets[x].typeOfBreedId = typeOfBreedId[x];
