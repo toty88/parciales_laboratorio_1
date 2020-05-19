@@ -6,18 +6,18 @@
 
 void getString(char msg[], char name[]){
 
-        int len;
-        printf("%s", msg);
-        __fpurge(stdin);
-        fgets(name, 31, stdin);
-        len = strlen(name);
-        name[len-1] = '\0';
+	int len;
+	printf("%s", msg);
+	__fpurge(stdin);
+	fgets(name, 31, stdin);
 	len = strlen(name);
-
+	name[len-1] = '\0';
+	len = strlen(name);
 	for(int x = 0; x < len; x++){
 		name[x] = toupper(name[x]);
 	}
 }
+
 
 int getId(int counter, int opt){
 

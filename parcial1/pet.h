@@ -5,6 +5,7 @@
 #define LIBRE 0
 #define OCU 1
 #define TAM_M 20
+#define TAM_B 10
 
 typedef struct {
 
@@ -16,10 +17,18 @@ typedef struct {
 	float weight;
 	int idClient;
 	int idPet;
+	int typeOfBreedId;
 	int isEmpty;
 
 }aPet;
 
+typedef struct{
+
+	int typeOfBreedId;
+	char breedName[30];
+	char breedCountry[30];
+
+}aTypeOfBreed;
 
 /** \brief funcion que hardcodea 11 mascotas para testear durante el programa
  *
@@ -121,3 +130,4 @@ float averagePetAge(aPet pets[], int lenP);
  *
  */
 void averagePetAgeByType(aPet pets[], int lenP);
+void printPetsAndBreeds(aPet pets[], int lenP, aTypeOfBreed breeds[], int lenB);

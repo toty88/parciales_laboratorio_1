@@ -11,6 +11,8 @@ void initPet(aPet pets[], int len){
 	}
 }
 
+
+
 void hardCodePets(aPet pets[], int len){
 
 	int age[11] = {12, 2, 10, 1, 8, 3, 8, 10, 1, 11, 12};
@@ -28,6 +30,7 @@ void hardCodePets(aPet pets[], int len){
 	int idClient[11] = {100,100,101,101,101,102,102,103,104,104,104};
 	int idPet[11] = {200,201,202,203,204,205,206,207,208,209,210};
 	int isEmpty[11] = {OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU};
+	int typeOfBreedId[11] = {4, 5, 1, 2, 4, 3,8, 2, 4, 5,9}; 
 	
 	for(int x = 0; x < 11; x++){
 		pets[x].age = age[x];
@@ -35,6 +38,7 @@ void hardCodePets(aPet pets[], int len){
 		strcpy(pets[x].race, race[x]);
 		strcpy(pets[x].type, type[x]);
 		pets[x].sex = sex[x];
+		pets[x].typeOfBreedId = typeOfBreedId[x];
 		pets[x].weight = weight[x];
 		pets[x].idClient = idClient[x];
 		pets[x].idPet = idPet[x];
@@ -204,6 +208,28 @@ void printPets(aPet pets[], int lenP){
 					pets[x].idPet, pets[x].idClient, pets[x].name, pets[x].type,
 					pets[x].race,pets[x].sex,pets[x].weight, pets[x].age);
 		}
+	}
+}
+
+void printPetsAndBreeds(aPet pets[], int lenP, aTypeOfBreed breeds[], int lenB){
+	char sp = ' ';
+        printf("\n#########################################################################################\n"
+               "###################################### PETS LIST ########################################\n"
+               "#########################################################################################\n");
+        printf("# ID_P%2cID_C%12cNAME%9cTYPE%8cWEIGHT%5cSEX%5cAGE%13cBREED%8cCOUNTRY\n", sp, sp, sp, sp, sp, sp, sp, sp);
+        printf("#########################################################################################\n\n");
+	for(int x = 0; x < lenP; x++){
+		if(pets[x].isEmpty == OCU){
+			printf("%6d%6d%16s%13s%12.2fkg%8c%8d", 
+					pets[x].idPet, pets[x].idClient, pets[x].name, pets[x].type,
+					pets[x].sex,pets[x].weight, pets[x].age);
+		}
+		for(int j = 0; j < lenB; j++){
+			if(pets[x].typeOfBreedId == breeds[j].typeOfBreedId && breeds[j].typeOfBreedId != -1){
+				printf("%18s%15s", breeds[j].breedName, breeds[j].breedCountry);
+			}
+		}
+		printf("\n");
 	}
 }
 

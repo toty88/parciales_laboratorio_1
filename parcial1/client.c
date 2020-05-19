@@ -89,10 +89,12 @@ int createClient(aClient clients[], int len, int count){
         char sex;
 	int id;
 	int validNumber;
+	int validString;
 	char age[5];
 	index = findFreeClientSpot(clients, len);
 	if(index != -1){
-       		 getString("Input client's name: ", name);
+
+		 getString("Input client's name: ", name);
 		 strcpy(clients[index].name, name);
        		 getString("Input client's last name: ", last_name);
 		 strcpy(clients[index].last_name, last_name);
@@ -262,12 +264,11 @@ void averageAgeAmongClients(aClient clients[], int lenC){
 	}
 }
 
-void averageMenAndWomen(aClient clients[], int lenC){
+void averageWomen(aClient clients[], int lenC){
 
 	int countM = 0;
 	int countF = 0;
 	int totalMyF;
-	float averageM;
 	float averageF;
 	char por = '%';
 
@@ -283,12 +284,7 @@ void averageMenAndWomen(aClient clients[], int lenC){
 			}
 		}
 	}
-
 	totalMyF = countM + countF;
-	averageM = (countM*100)/totalMyF;
 	averageF = (countF*100)/totalMyF;
-
-	printf("Average man among clients -> %.0f%c", averageM, por);
 	printf("\nAverage female among clients -> %.0f%c",  averageF, por);
-
 }

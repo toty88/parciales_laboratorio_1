@@ -48,7 +48,7 @@ void printPetsOlderThanThree(aPet pets[], int lenP, aClient clientes[], int lenC
  * \return int: retorna 0 en caso que este OK o -1 en caso de que no haya mas espacio para crear mascotas
  *
  */
-int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count);
+int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count, aTypeOfBreed breeds[], int lenB);
 
 /** \brief funcion que eliminar cliente en cascada (junto con sus mascotas)
  *

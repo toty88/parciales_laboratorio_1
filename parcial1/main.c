@@ -8,7 +8,10 @@ int main(){
 
 	aClient clients[TAM_C];
 	aPet pets[TAM_M];
-
+	aTypeOfBreed breeds[TAM_B] = {{1, "PASTOR", "ALEMAN"}, {2, "LABRADOS", "INGLES"},{3, "PITBULL", "INGLES"}, 
+					{4, "GATO", "PERSA"}, {5, "GATO", "SIAMES"}, 
+					{6, "LAGARTO", "OVERO"}, {7, "IGUANA", "AUSTRALIA"},
+					{8, "BULLDOG", "INGLES"}};
 	initClient(clients, TAM_C);
 	initPet(pets, TAM_M);
 
@@ -45,11 +48,11 @@ int main(){
 				if(petCounter < 1){
 					printf("You need to add a pet first [4].");
 				}else{
-					printPets(pets, TAM_M);
+					printPetsAndBreeds(pets, TAM_M, breeds, TAM_B);
 				}
 				break;
 			case 4:
-				resu = createPet(pets, TAM_M, clients, TAM_C, petCounter);
+				resu = createPet(pets, TAM_M, clients, TAM_C, petCounter, breeds, TAM_B);
 				if(resu == 0){
 					printf("Pet created");
 					petCounter++;
@@ -128,9 +131,9 @@ int main(){
 				averagePetAgeByType(pets, TAM_M);
 				break;
 			case 18:
-				averageAgeAmongClients(clients, TAM_C);
+			//	averageAgeAmongClients(clients, TAM_C);
 				printf("\n");
-				averageMenAndWomen(clients, TAM_C);
+				averageWomen(clients, TAM_C);
 				break;
 			case 19:
 				printf("BYE");

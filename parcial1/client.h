@@ -107,4 +107,4 @@ void printOneClient(aClient client);
  *
  */
 void averageAgeAmongClients(aClient clients[], int lenC);
-void averageMenAndWomen(aClient clients[], int lenC);
+void averageWomen(aClient clients[], int lenC);

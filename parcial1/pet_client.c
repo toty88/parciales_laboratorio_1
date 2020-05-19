@@ -77,7 +77,7 @@ void printPetsOlderThanThree(aPet pets[], int lenP, aClient clients[], int lenC)
 }
 
 
-int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count){
+int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count, aTypeOfBreed breeds[], int lenB){
 
 	int resu = -1;
 	int index;
@@ -87,6 +87,7 @@ int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count){
 	char race[20];
 	char type[30];
 	char sex;
+	int raza;
 	int validType;
 	int validNumber;
 	int clientIndex;
@@ -94,8 +95,6 @@ int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count){
 	if(index != -1){
 		getString("Input Pet's name: ", name);
 		strcpy(pets[index].name, name);
-		getString("Input Pet's breed: ", race);
-		strcpy(pets[index].race, race);
 		getString("Input Pet's type [gato:perro:raro]: ", type);
 		validType = validateType(type);
 		while(validType !=0){
@@ -123,6 +122,30 @@ int createPet(aPet pets[], int lenP, aClient clients[], int lenC, int count){
 			clientIndex = findClientById(clients, lenC, validNumber);
 		}
 		
+		printPetsAndBreeds(pets, lenP, breeds, lenB);
+		printf("Ingrese raza\n"
+			"1. pastor aleman\n"
+			"2. labrador ingles\n"
+			"3. pitbull inglres\n"
+			"4. gato persa\n"
+			"5. gato siames\n"
+			"6. lagarto overo\n"
+			"7. iguana asutraliana\n"
+			"8. bulldog ingles ");	
+		scanf("%d", &raza);
+		while(raza != 1 && raza !=2 && raza !=3 && raza !=4 && raza !=5 && raza != 6 && raza != 7 && raza != 8){
+			printf("Error, ingrese raza\n"
+				"1. pastor aleman\n"
+				"2. labrador ingles\n"
+				"3. pitbull inglres\n"
+				"4. gato persa\n"
+				"5. gato siames\n"
+				"6. lagarto overo\n"
+				"7. iguana asutraliana\n"
+				"8. bulldog ingles ");	
+			scanf("%d", &raza);
+		}
+		pets[index].typeOfBreedId = raza;	
 		pets[index].idPet = getId(count, 2);
 		pets[index].idClient = clients[clientIndex].idClient;
 		clients[clientIndex].petCounter++;
