@@ -4,4 +4,5 @@
 
 
 int mainMenu();
-int modifyPetMenu();
+int modifyPetMenu(int);
+int modifyClientMenu(int);

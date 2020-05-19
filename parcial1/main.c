@@ -7,17 +7,23 @@
 int main(){
 
 	aClient clients[TAM_C];
+	aPetClientCounter counterOfPets[TAM_C];
 	aPet pets[TAM_M];
+
 	initClient(clients, TAM_C);
+	initPetCounter(counterOfPets, TAM_PC);
 	initPet(pets, TAM_M);
-	hardCode(clients, TAM_C);
+
+	hardCodeClient(clients, TAM_C);
 	hardCodePets(pets, TAM_M);
+	hardCodePetCounter(counterOfPets);
+
 	int resu;
 	int opt;
 //	int clientCounter = 0;
 //	int petCounter = 0;
-	int clientCounter = 104;
-	int petCounter = 211;
+	int clientCounter = 5;
+	int petCounter = 11;
 
 	do{
 		opt = mainMenu();
@@ -61,10 +67,19 @@ int main(){
 				}
 				break;
 			case 6:
-				modifyPet(pets, TAM_M);
+				if(petCounter < 1){
+					printf("You need to add a pet first [4].");
+				}else{
+					resu = modifyPet(pets, TAM_M);
+					if (resu == 0){
+						printf("Pet modified");
+					}else{
+						printf("No modification made");
+					}
+				}
 				break;
 			case 7:
-				resu = createClient(clients, TAM_C, clientCounter);
+				resu = createClient(clients, TAM_C, clientCounter, counterOfPets);
 				if(resu == 0){
 					printf("Client created");
 					clientCounter++;
@@ -76,6 +91,39 @@ int main(){
 				deleteAllFromClient(clients, TAM_C, pets, TAM_M); 
 				break;
 			case 9:
+				sortPetByType(clients, pets, TAM_C, TAM_M);
+				break;
+			case 10:
+				if(clientCounter < 1){
+					printf("You need to add a client first [7].");
+				}else{
+					resu = modifyClient(clients, TAM_C);
+					if (resu == 0){
+						printf("Client modified");
+					}else{
+						printf("No modification made");
+					}
+				}
+				break;
+
+			case 11:
+				printClientsWithMoreThanOnePet(clients, TAM_C, pets, TAM_M);
+				break;
+			case 12:
+				printPetsOlderThanThree(pets, TAM_M, clients, TAM_C);
+				break;
+			case 13:
+				printPetByChosenType(pets, TAM_M);
+				break;
+			case 14:
+				sortClientsByPetCount(clients, TAM_C, pets, TAM_M, counterOfPets, TAM_PC);
+				printClientAndPet(clients, TAM_C, pets, TAM_M);
+				break;
+			case 15:
+				sortClientByPetCountAndName(clients, TAM_C, pets, TAM_M, counterOfPets, TAM_PC);
+				printClientAndPet(clients, TAM_C, pets, TAM_M);
+				break;
+			case 20:
 				printf("BYE");
 				break;
 			default:
@@ -87,7 +135,7 @@ int main(){
 			getchar();
 			system("clear");
 		}
-	}while(opt != 9);
+	}while(opt != 20);
 	return 0;
 }
 

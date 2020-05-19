@@ -19,10 +19,14 @@ void getString(char msg[], char name[]){
 	}
 }
 
-int getId(int counter){
+int getId(int counter, int opt){
 
         int id;
-        id = 1 + counter;
+        if(opt == 1){
+		id = 100 + counter;
+	}else{
+		id = 200 + counter;
+	}
         return id;
 }
 

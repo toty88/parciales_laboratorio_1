@@ -13,7 +13,7 @@ void initPet(aPet pets[], int len){
 
 void hardCodePets(aPet pets[], int len){
 
-	int age[11] = {12, 11, 10, 5, 8, 6, 8, 10, 7, 11, 12};
+	int age[11] = {12, 2, 10, 1, 8, 3, 8, 10, 1, 11, 12};
 	char name[11][30] = {"FIRULAIS", "ATHOS", "ZEUS", "ERGO", "ATHILA", "PEPITO", 
 		"ROCKET", "CEREBRO", "SONRISAS", "HUMOROSO", "GRUTI"};
 
@@ -26,7 +26,7 @@ void hardCodePets(aPet pets[], int len){
 	float weight[11]= {2.5, 7.4, 3.2, 1.8, 9.8, 8.7, 1.2, 4.3, 11.2, 6.3, 9.3};
 	char sex[11]= {'m', 'm', 'f', 'm', 'f','m', 'm', 'f', 'm', 'f', 'm'};
 	int idClient[11] = {100,100,101,101,101,102,102,103,104,104,104};
-	int idPet[11] = {200,201,203,204,205,206,207,208,209,210,211};
+	int idPet[11] = {200,201,202,203,204,205,206,207,208,209,210};
 	int isEmpty[11] = {OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU, OCU};
 	
 	for(int x = 0; x < 11; x++){
@@ -54,15 +54,6 @@ int findFreePetSpot(aPet pets[], int len){
 	return index;
 }
 
-void printOnePet(aPet pets){
-	char sp = ' ';
-        printf("#########################################################################################\n");
-        printf("# ID_P%2cID_C%12cNAME%9cTYPE%14cBREED%8cWEIGHT%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp);
-        printf("#########################################################################################\n");
-	printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d\n", pets.idPet, pets.idClient, pets.name, pets.type,
-						pets.race,pets.sex,pets.weight, pets.age);
-        printf("#########################################################################################\n\n");
-}
 
 int getPetById(aPet pets[], int len, int id){
 	int index = -1;
@@ -107,7 +98,7 @@ int deletePet(aPet pets[], int len){
 	return output;
 }
 
-void modifyPet(aPet pets[], int len){
+int modifyPet(aPet pets[], int len){
 
 	char number[10];
 	int opt1, opt2;
@@ -118,9 +109,10 @@ void modifyPet(aPet pets[], int len){
 	float weight;
 	char sex;
 	int index;
-	int flag = 0;
+	int output = -1;
 	int validType;
 	int menu = 0;
+	char sp = ' ';
 	do{
 		if(menu == 0){
 			do{
@@ -157,32 +149,40 @@ void modifyPet(aPet pets[], int len){
 			do{
         			printf("#########################################################################################\n");
                			printf("################################### PET SUBMENU #########################################\n");
+        			printf("#########################################################################################\n");
+        			printf("# ID_P%2cID_C%12cNAME%9cTYPE%13cBREED%8cWEIGHT%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp);
+        			printf("#########################################################################################\n");
 				printOnePet(pets[index]);
+        			printf("#########################################################################################\n");
 				opt2 = modifyPetMenu(menu);
 				switch(opt2){
 
 				        case 1:
 				        	 getString("Input New Pet's name: ", name);
 				        	 strcpy(pets[index].name, name);
+						 output = 0;
 				        	 break;
 				        case 2: 
 				        	 sex = getSex("Input new sex [f:m]: ");
 				        	 pets[index].sex = sex;
+						 output = 0;
 				        	 break;
 				        case 3: 
-				        	 strcpy(pets[index].type, type);
 				        	 validateN = validateNumber("Input age: ", number, 10);
 				        	 pets[index].age = validateN;
+						 output = 0;
 				        	 break;
 				        case 4: 
 				        	 printf("Input weight: ");
 				        	 __fpurge(stdin);
 				        	 scanf("%f", &weight);
 				        	 printf("Input Pet's ID first [2]");
+						 output = 0;
 				        	 break;
 				        case 5: 
 				        	 getString("Input Pet's breed: ", race);
 				        	 strcpy(pets[index].race, race);
+						 output = 0;
 				        	 break;
 				        case 6: 
 				        	 getString("Input Pet's type [gato:perro:raro]: ", type);
@@ -191,6 +191,8 @@ void modifyPet(aPet pets[], int len){
 				        	 	getString("Error, input Pet's type [gato:perro:raro]: ", type);
 				        	 	validType = validateType(type);
 				        	 }
+				        	 strcpy(pets[index].type, type);
+						 output = 0;
 				        	 break;
 
 				        case 7: 
@@ -207,19 +209,14 @@ void modifyPet(aPet pets[], int len){
 			}while(opt2 !=7);
 		} // FIN ELSE
 	}while(opt1 !=3); // fin while
+	return output;
 }
 
 int validateType(char validar[]){
 
 	int valido = 0;
-	int len;
-	len = strlen(validar);
 
-	for(int x = 0; x < len; x++){
-		validar[x] = tolower(validar[x]);
-	}
-
-	if(strcmp(validar, "gato") != 0 && strcmp(validar, "perro")!= 0 && strcmp(validar, "raro")!= 0){
+	if(strcmp(validar, "GATO") != 0 && strcmp(validar, "PERRO")!= 0 && strcmp(validar, "RARO")!= 0){
 		valido = -1;
 	}
 
@@ -239,6 +236,38 @@ void printPets(aPet pets[], int lenP){
 			printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d\n", 
 					pets[x].idPet, pets[x].idClient, pets[x].name, pets[x].type,
 					pets[x].race,pets[x].sex,pets[x].weight, pets[x].age);
+		}
+	}
+}
+
+void printOnePet(aPet pets){
+
+	printf("%6d%6d%16s%13s%18s%12.2fkg%8c%8d\n", pets.idPet, pets.idClient, pets.name, pets.type,
+						pets.race,pets.sex,pets.weight, pets.age);
+}
+
+void printPetByChosenType(aPet pets[], int lenP){
+	
+	int validType;
+	char type[30];
+	char sp = ' ';
+	int n = 1;
+
+	getString("Input Pet's type [gato:perro:raro]: ", type);
+	validType = validateType(type);
+	while(validType !=0){
+		getString("Error, input Pet's type [gato:perro:raro]: ", type);
+		validType = validateType(type);
+	}
+
+        printf("\n############################################################################################\n");
+        printf("# %3cID_P%2cID_C%12cNAME%9cTYPE%13cBREED%8cWEIGHT%5cSEX%5cAGE\n", sp, sp, sp, sp, sp, sp, sp, sp);
+        printf("############################################################################################\n");
+	for(int x = 0; x < lenP; x++){
+		if(strcmp(pets[x].type, type) == 0 && pets[x].isEmpty == OCU){
+			printf("%d) ", n);
+			printOnePet(pets[x]);
+			n++;
 		}
 	}
 }

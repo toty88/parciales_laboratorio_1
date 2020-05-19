@@ -5,5 +5,5 @@
 
 int validateNumber(char msg[], char text[], int size);
 void getString(char msg[], char name[]);
-int getId(int counter);
+int getId(int counter, int opt);
 char getSex(char msg[]);
